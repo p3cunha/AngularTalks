@@ -1,0 +1,64 @@
+<mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+  <mat-tab label="SLIDES">
+    <div class="slides">
+      <pdf-viewer
+        src="../assets/Programação reativa com Angular e RxJS.pdf"
+        [render-text]="true"
+        [original-size]="false"
+        style="width: 80vw; height: 80vh"
+        (pageChange)="prevPage()"
+        [show-all]="false"
+        [(page)]="page"
+      ></pdf-viewer>
+      <div class="slide-controls">
+        <mat-icon (click)="prevPage()">chevron_left</mat-icon
+        ><mat-icon (click)="nextPage()">navigate_next</mat-icon>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="SEARCH">
+    <mat-tab-group
+      mat-align-tabs="center"
+      animationDuration="0ms"
+      headerPosition="below"
+    >
+      <mat-tab label="Imperativo">
+        <reddit-search-wo-rxjs></reddit-search-wo-rxjs>
+      </mat-tab>
+      <mat-tab label="RxJS">
+        <reddit-search></reddit-search>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-tab>
+
+  <mat-tab label="BusApp">
+    <mat-tab-group
+      mat-align-tabs="center"
+      animationDuration="0ms"
+      headerPosition="below"
+    >
+      <mat-tab label="Imperativo">
+        <bus-line-list
+          *ngIf="busLines$ | async as busLines"
+          [items]="busLines"
+          (selectedBus)="onBusSelect($event)"
+        ></bus-line-list>
+        <bus-route [coordinates]="selectedCoordinates"></bus-route>
+      </mat-tab>
+
+      <mat-tab label="RxJS">
+        <bus-line-list
+          *ngIf="busLines$ | async as busLines"
+          [items]="busLines"
+          (selectedBus)="selectedBus$.next($event)"
+        ></bus-line-list>
+        <bus-route [coordinates]="selectedCoordinates$ | async"></bus-route>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-tab>
+
+  <ng-template #loading>
+    <mat-spinner [diameter]="20"></mat-spinner>
+  </ng-template>
+</mat-tab-group>

@@ -1,0 +1,19 @@
+.mat-tab-group {
+  height: 100%;
+}
+
+reddit-search {
+  height: 100%;
+}
+
+.slides {
+  display: flex;
+
+  .slide-controls {
+    display: flex;
+    align-items: flex-end;
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}
